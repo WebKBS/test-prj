@@ -52,3 +52,28 @@ export async function POST(req, res) {
     return NextResponse.json({ status: 500, message: 'Internal server error' });
   }
 }
+
+export async function GET(req, res) {
+  try {
+    const { method } = req;
+
+    if (method === 'GET') {
+      if (intervalId) {
+        return NextResponse.json({
+          status: 200,
+          message: 'Interval is running',
+        });
+      } else {
+        return NextResponse.json({
+          status: 400,
+          message: 'Interval not running',
+        });
+      }
+    } else {
+      return NextResponse.json({ status: 405, message: 'Method not allowed' });
+    }
+  } catch (error) {
+    console.error('Error occurred:', error);
+    return NextResponse.json({ status: 500, message: 'Internal server error' });
+  }
+}

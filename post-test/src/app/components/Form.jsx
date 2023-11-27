@@ -1,6 +1,22 @@
 'use client';
 
+import { useEffect } from 'react';
+
 const Form = () => {
+  useEffect(() => {
+    fetch('/api/startInterval')
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.error('Error starting interval:', response.statusText);
+        }
+      })
+      .then((data) => {
+        console.log(data.message);
+      });
+  }, []);
+
   const handleStartInterval = async () => {
     try {
       const response = await fetch('/api/startInterval', {
